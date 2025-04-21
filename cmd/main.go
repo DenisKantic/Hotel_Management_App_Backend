@@ -28,6 +28,7 @@ func main() {
 
 	// ROUTES
 	routes.AuthRoutes(r)
+	routes.LogoutRoute(r)
 
 	err := r.Run(":8080")
 	if err != nil {

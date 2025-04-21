@@ -16,7 +16,7 @@ func Login(c *gin.Context) {
 		Password string `json:"password" binding:"required"`
 	}
 
-	if err := c.ShouldBind(&input); err != nil {
+	if err := c.ShouldBindJSON(&input); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid input"})
 		fmt.Printf("ERROR:", err.Error())
 		return
@@ -40,4 +40,10 @@ func Login(c *gin.Context) {
 	}
 
 	c.SetCookie("token", token, 60*60*24, "/", "localhost", false, false)
+}
+
+func Logout(c *gin.Context) {
+	c.SetCookie("token", "", -1, "/", "localhost", false, false)
+
+	c.JSON(200, gin.H{"success": "Logout successfully"})
 }
